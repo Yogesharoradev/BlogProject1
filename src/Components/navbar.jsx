@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const onLogout =async () => {
    try{
-      await axios.get("http://localhost:8080/auth/logout" , {withCredentials :true})
+      await axios.get("https://blogprojbackend.onrender.com/logout" , {withCredentials :true})
       message.success("logout successfully")
       setSession(null)
       navigate("/login")
@@ -45,7 +45,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await axios.get('http://localhost:8080/api/user', {
+        const res = await axios.get('https://blogprojbackend.onrender.com/api/user', {
           withCredentials: true, // This ensures that session cookies are sent with the request
         });
         setSession(res.data)

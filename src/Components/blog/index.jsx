@@ -20,17 +20,17 @@ const Blog = () => {
   const { session } = useContext(context); // Fetch session (author info)
 
   // Use SWR to fetch blogs
-  const { data: myBlogs = [], error, isLoading } = useSWR("http://localhost:8080/blogsByAuthor", fetcher);
+  const { data: myBlogs = [], error, isLoading } = useSWR("https://blogprojbackend.onrender.com/blogsByAuthor", fetcher);
 
   const handleShowMyBlogs = () => setShowMyBlogs(true);
   const handleShowSavedBlogs = () => setShowMyBlogs(false);
 
   const deleteBlog = async (id) => {
     try {
-      await axios.delete("http://localhost:8080/delete", { data: { id }, withCredentials: true });
+      await axios.delete("https://blogprojbackend.onrender.com/delete", { data: { id }, withCredentials: true });
 
       // Optimistically update the local data
-      mutate("http://localhost:8080/blogsByAuthor", myBlogs.filter(blog => blog._id !== id), false);
+      mutate("https://blogprojbackend.onrender.com/blogsByAuthor", myBlogs.filter(blog => blog._id !== id), false);
       message.success("Blog deleted successfully");
     } catch (err) {
       message.error("Error deleting blog, please try again later.");
@@ -57,10 +57,10 @@ const Blog = () => {
 
     try {
       // Make API call to add blog
-      const response = await axios.post("http://localhost:8080/addblog", newBlog, { withCredentials: true });
+      const response = await axios.post("https://blogprojbackend.onrender.com/addblog", newBlog, { withCredentials: true });
       
       // Optimistically add the new blog to the local data
-      mutate("http://localhost:8080/blogsByAuthor");
+      mutate("https://blogprojbackend.onrender.com/blogsByAuthor");
       form.resetFields(); // Reset form fields after successful addition
       message.success('Blog added successfully!');
       setIsModalVisible(false);

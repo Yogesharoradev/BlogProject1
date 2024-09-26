@@ -11,7 +11,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8080/get", { withCredentials: true });
+        const { data } = await axios.get("https://blogprojbackend.onrender.com/get", { withCredentials: true });
           setPosts(data.data);
       } catch (err) {
         console.log(err);

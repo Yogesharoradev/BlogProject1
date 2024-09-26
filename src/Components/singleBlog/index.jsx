@@ -21,7 +21,7 @@ const SingleBlog = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/posts/${id}`, { withCredentials: true });
+        const response = await axios.get(`https://blogprojbackend.onrender.com/posts/${id}`, { withCredentials: true });
         setData(response.data.data);
         setLikes(response.data.data.likes || 0);
         setLoading(false);
@@ -34,7 +34,7 @@ const SingleBlog = () => {
 
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/get');
+        const response = await axios.get('https://blogprojbackend.onrender.com/get');
         setRecentPosts(response.data.data || []);
       } catch (err) {
         console.error(err);

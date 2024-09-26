@@ -15,7 +15,7 @@ const NewBlog = () => {
 
   const onFinish = async (values) => {
     try {
-       const data = await axios.post('http://localhost:8080/post', values , {withCredentials :true});
+       const data = await axios.post('https://blogprojbackend.onrender.com/post', values , {withCredentials :true});
        console.log(data)
       message.success('Blog posted successfully!');
     } catch (error) {

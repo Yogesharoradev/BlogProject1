@@ -13,7 +13,7 @@ const Signup = () => {
   const onFinish = async (values) => {
     try{
 
-      const user = await axios.post("http://localhost:8080/auth/signup" , values , {credentials : true})
+      const user = await axios.post("https://blogprojbackend.onrender.com/auth/signup" , values , {credentials : true})
       console.log(user)
       message.success("we are redirecting you to login")
       navigate("/login")
