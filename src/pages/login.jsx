@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin =async () => {
-    window.location.href = "http://localhost:8080/auth/google";
+    window.location.href = "https://blogprojbackend.onrender.com/auth/google";
   };
 
 
