@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Navbar from '../Components/Navbar';
 import { FloatButton, Modal } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
-import Footer from '../Components/Footer';
-import ChatUI from '../Components/ChatUI';
+import Navbar from "../Components/navbar"
+import Footer from "../Components/footer"
+import ChatUi from "../Components/chatUi"
+
 
 const AppLayout = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -36,7 +37,7 @@ const AppLayout = ({ children }) => {
                 onCancel={handleCancel}
                 footer={null} 
             >
-                <ChatUI/> 
+                <ChatUi /> 
             </Modal>
         </>
     );

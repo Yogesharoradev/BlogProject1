@@ -3,7 +3,7 @@ import { BarsOutlined, DiscordOutlined, FacebookOutlined, TwitterOutlined, XOutl
 import { Avatar, Button, Modal , message } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import context from '../../lib/context';
+import context from '../lib/context';
 import axios from 'axios';
 
 const Navbar = () => {

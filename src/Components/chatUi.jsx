@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, List } from 'antd';
 
-const ChatUI = () => {
+const ChatUi = () => {
     const [messages, setMessages] = useState([]); // To store chat messages
     const [inputValue, setInputValue] = useState(''); // To handle input value
 
@@ -40,4 +40,4 @@ const ChatUI = () => {
     );
 };
 
-export default ChatUI;
+export default ChatUi;
