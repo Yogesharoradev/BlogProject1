@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import { FloatButton, Modal } from 'antd';
-import { MessageOutlined } from '@ant-design/icons'; // Import the Message icon
-import ChatUI from '../Components/ChatUI'; // Assuming ChatUI is your chat component
+import { MessageOutlined } from '@ant-design/icons';
 import Footer from '../Components/Footer';
+import ChatUI from '../Components/ChatUI';
 
 const AppLayout = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,9 +34,9 @@ const AppLayout = ({ children }) => {
                 title="Chat"
                 open={isModalVisible}
                 onCancel={handleCancel}
-                footer={null} // Adjust as needed, e.g., add a submit button
+                footer={null} 
             >
-                <ChatUI /> {/* Your Chat UI component goes here */}
+                <ChatUI/> 
             </Modal>
         </>
     );
