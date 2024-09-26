@@ -1,73 +1,78 @@
-import React, { useState } from 'react'
-import blogData from "../../api/blogdata"
-import { Card } from "antd";
-import { Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Pagination } from 'antd';
-import Sidebar from '../sidebar';
+import { Avatar } from 'antd';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import moment from "moment"
 
+const BlogPage = () => {
+  const [posts, setPosts] = useState([]); // State to hold the fetched posts
 
-const BlogPage = (id) => { 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:8080/get", { withCredentials: true });
+          setPosts(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const [currentPage ,  setcurrentPage] = useState(1);
-  const [selectedCategory , setselectedCategory] = useState(null)
-  const pageSize = 12
+    fetchData();
+  }, []); // Empty dependency array to run on mount
 
-  const onChange =(page)=>{
-        setcurrentPage(page)
-  }
-
-  const Category=(category)=>{
-        setselectedCategory(category)
-        setcurrentPage(1)
-  }
-
-  const FilterBlogs = selectedCategory ? 
-                    blogData.filter(data => data.category === selectedCategory)
-                         : blogData
-    
-
-     
   return (
-    <div>
-        <div className='md:flex justify-center md:gap-20 items-center shadow-medium p-4 border border-b-4 flex gap-4'>
-           <button className='font-semibold hover:text-orange-400 border border-b-8 px-3 rounded' onClick={()=>Category(null)}>All</button>
-           <button className='font-semibold hover:text-orange-400 border border-b-8 px-3 rounded' onClick={()=>Category("Startups")}>Startups</button>
-           <button className='font-semibold hover:text-orange-400 border border-b-8 px-3 rounded' onClick={()=>Category('Security')}>Security</button>
-           <button className='font-semibold hover:text-orange-400 border border-b-8 px-3 rounded' onClick={()=>Category('AI')}> AI</button>
-           <button className='font-semibold hover:text-orange-400 border border-b-8 px-3 rounded' onClick={()=>Category(' Fintech')}>Tech</button>
-          </div>
+    <div className='min-h-screen bg-gray-200 flex justify-center'>
+      <div className='bg-white shadow-lg rounded-lg p-8 w-11/12 lg:w-8/12 max-w-full mt-8'>
+        <h1 className='font-semibold text-2xl mb-4'>All Posts</h1>
+        <div className='grid md:grid-cols-2 gap-8 p-3'>
+          {posts.length > 0 ? (
+            posts.map((post , idx) => (
+              <div key={idx} className='h-auto w-full'>
+                <div className='overflow-hidden rounded-lg'>
+                  <img
+                    src={post.image} // Assume your post object has an image property
+                    className='w-full h-60 object-cover rounded-t-lg' // Responsive image
+                    alt={post.title} // Alt text for accessibilit
+                  />
+                </div>
+                <div className='flex justify-between items-center'>
+                  <div className='flex gap-4 px-3 py-5 items-center'>
+                    <Avatar src={post.authorAvatar} icon={ <UserOutlined />} /> {/* Assume you have an avatar image */}
+                    <div className='flex flex-col'>
+                      <h1>{post.author || "User"}</h1>
+                      <p>{moment(post.createdAt).format('DD MMMM YYYY')} • {post.readTime || 5} min</p> {/* Dynamically display date and read time */}
+                    </div>
+                  </div>
+                  <button>Share</button>
+                </div>
+      
+                <div className='flex flex-col p-5'>
+                  <Link to={`/posts/${post._id}`} className='hover:text-blue-700'>
+                    <h1 className='font-bold text-3xl'>{post.title}</h1> {/* Post title */}
+                  </Link>
+                  <p className='p-2'>{post.content}</p> {/* Post subtitle */}
+                </div>
 
-        <div className='flex flex-col lg:flex-row gap-12 '>
-         <div  className='grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8'>
-             {
-                FilterBlogs.slice((currentPage-1)*pageSize, currentPage * pageSize).map((data , idx)=>(
-             <Link to={`/singleBlog/${data.id}`} key={idx}>
-               <div>
-               
-                <Card className='hover:border-2 border-b-lime-500'>
-                  <img src={data.image} alt='image'/>
-                    <h1 className='mt-4 mb-2 font-bold hover:text-blue-600'>{data.title}</h1>
-                    <p className='mb-2'><UserOutlined/> {data.author}</p>
-                    <p>  Publish : { data.published_date}</p>
-                </Card>
-
-               </div>
-             </Link>
-                 ))
-             }
-            </div>
-
-            <div >
-                 <Sidebar/>
-             </div>
+                <div className='bottom-0 left-0 right-0'>
+                  <hr />
+                  <div className='flex justify-between items-center p-3'>
+                    <div className='flex gap-4'>
+                      <h1>{post.views} views</h1>
+                      <h2>{post.comments} comments</h2> {/* Comments count */}
+                    </div>
+                    <div>{post.likes} ♥</div> {/* Likes count */}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No posts available.</p> // Fallback message when there are no posts
+          )}
         </div>
-
-            <div className='mt-3 p-4'>
-             <Pagination showQuickJumper defaultPageSize={pageSize} onChange={onChange} total={blogData.length}  className='text-center mb-4' />
-             </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlogPage
+export default BlogPage;

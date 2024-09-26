@@ -1,6 +1,7 @@
 import React from 'react'
 import Banner from '../banner'
 import {Card} from "antd"
+import Applayout from "../../pages/appLayout"
 
 const About = () => {
 
@@ -34,8 +35,8 @@ const About = () => {
 
   ]
   return (
+    <Applayout>
    <div>
-    <Banner title="About Page"/>
     <div className='p-8 min-h-[400px]'>
     <div className='grid md:grid-cols-3 gap-3'>
         <div>
@@ -72,6 +73,7 @@ const About = () => {
     
     </div>
    </div>
+   </Applayout>
   )
 }
 
