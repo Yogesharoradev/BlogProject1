@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
 import { FloatButton, Modal } from 'antd';
 import { MessageOutlined } from '@ant-design/icons'; // Import the Message icon
 import ChatUI from '../Components/ChatUI'; // Assuming ChatUI is your chat component
+import Footer from '../Components/Footer';
 
 const AppLayout = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
