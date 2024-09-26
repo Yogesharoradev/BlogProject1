@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const onLogout =async () => {
    try{
-      await axios.get("https://blogprojbackend.onrender.com/logout" , {withCredentials :true})
+      await axios.get("https://blogprojbackend.onrender.com/auth/logout" , {withCredentials :true})
       message.success("logout successfully")
       setSession(null)
       navigate("/login")
