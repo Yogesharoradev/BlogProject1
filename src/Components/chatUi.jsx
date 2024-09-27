@@ -10,7 +10,7 @@ const ChatUi = () => {
   const fetchApiResponse = async (message) => {
     try {
       setLoading(true);
-      const response = await axios.get('https://blogprojbackend.onrender.com/api/gemini', { message });
+      const response = await axios.post('https://blogprojbackend.onrender.com/api/gemini', { message });
       const botResponse = response.data.answer || "This is a sample response from the API.";
 
       setMessages(prevMessages => [
