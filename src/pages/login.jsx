@@ -16,7 +16,6 @@ const Login = () => {
       const {data} = await axios.post("https://blogprojbackend.onrender.com/auth/login" , values , {withCredentials: true})
       setLoading(true);
       setSession(data)
-      console.log(data)
       message.success("Login Successfully")
       navigate("/")
   
@@ -27,7 +26,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin =async () => {
-    window.location.href = "https://blogprojbackend.onrender.com/auth/google";
+    window.location.href = "https://blogprojbackend.onrender.com/auth/google"; 
   };
 
 

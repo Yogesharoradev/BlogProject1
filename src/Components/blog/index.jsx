@@ -21,7 +21,7 @@ const Blog = () => {
 
   // Use SWR to fetch blogs
   const { data: myBlogs = [], error, isLoading } = useSWR("https://blogprojbackend.onrender.com/blogsByAuthor", fetcher);
-
+  console.log(error)
   const handleShowMyBlogs = () => setShowMyBlogs(true);
   const handleShowSavedBlogs = () => setShowMyBlogs(false);
 
@@ -45,7 +45,7 @@ const Blog = () => {
       title: values.title,
       subtitle: values.subtitle || "story",
       content: values.content,
-      author: session.name || session.user.name,
+      author: session?.name || session?.user?.name,
       authorAvatar: randomAvatarUrl,
       createdAt: new Date(),
       readTime: 5,
@@ -56,7 +56,9 @@ const Blog = () => {
     };
 
     try {
-      // Make API call to add blog
+      if( !session?.name || !session?.user?.name){
+        message.error("signup to add blogs")
+      }
       const response = await axios.post("https://blogprojbackend.onrender.com/addblog", newBlog, { withCredentials: true });
       
       // Optimistically add the new blog to the local data
@@ -65,6 +67,7 @@ const Blog = () => {
       message.success('Blog added successfully!');
       setIsModalVisible(false);
     } catch (err) {
+      console.log(err)
       message.error(err.response?.data?.message || 'Failed to add blog.');
     }
   };

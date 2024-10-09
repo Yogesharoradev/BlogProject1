@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { BarsOutlined, DiscordOutlined, FacebookOutlined, TwitterOutlined, XOutlined } from '@ant-design/icons';
 import { Avatar, Button, Modal , message } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import context from '../lib/context';
 import axios from 'axios';
@@ -11,6 +11,8 @@ const Navbar = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { session, setSession } = useContext(context);
   const navigate = useNavigate();
+
+  
 
   const onLogout =async () => {
    try{
@@ -44,18 +46,24 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log("Fetching user data..."); // Log when fetching starts
       try {
         const res = await axios.get('https://blogprojbackend.onrender.com/api/user', {
           withCredentials: true, // This ensures that session cookies are sent with the request
         });
-        setSession(res.data)
+        console.log("User data fetched:", res.data); // Log the fetched user data
+        setSession(res.data); // Update session state with fetched user data
       } catch (err) {
-        console.error('Failed to fetch user data', err);
+        console.error('Failed to fetch user data', err); // Log the error if it fails
       }
     };
-
-    fetchUserData();
-  }, []);
+  
+    // Only fetch user data if there is a valid session
+    if (session) {
+      fetchUserData();
+    }
+  }, [session]);
+  
 
   const NavItems = [
     {
